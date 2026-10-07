@@ -1,13 +1,15 @@
+import os
 from flask import Flask, request, jsonify
 from supabase import create_client
 
 app = Flask(__name__)
 
-# 填入你剛才在 Supabase 拿到的 2 串資料
-SUPABASE_URL = "https://qsbwtkbzsfhbvofdbuet.supabase.co/rest/v1/"  # 換成你的 Project URL
-SUPABASE_KEY = "sb_publishable_zAc0dtU7lq982QE3vi-I8w_5B-6TKC5"  # 換成你的 Publishable Key
+# 從 Vercel 環境變數讀取（若讀不到則自動備份）
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://qsbwtkbzsfhbvofdbuet.supabase.co")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+
 
 @app.route('/api/verify', methods=['POST'])
 def verify():
